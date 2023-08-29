@@ -27,7 +27,7 @@ export default function Home() {
           <p className="text-lg text-center">Transform your life one streak at a time!</p>
         </div>
         <div className="mt-20 text-center">
-          <button className="border border-green-500 bg-green-500 p-2 rounded-md text-white">Get started for free</button>
+          <Link href={"/dashboard"} className="border border-green-500 bg-green-500 p-2 rounded-md text-white">Get started for free</Link>
         </div>
       </div>
       <div className="absolute bottom-0 left-1/2 trasnform -translate-x-1/2 -translate-y-1/2">

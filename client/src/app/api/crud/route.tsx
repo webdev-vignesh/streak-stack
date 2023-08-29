@@ -14,7 +14,7 @@ export const getHabitRecords = async() => {
 }
 
 // API call to post a new habit to the db
-export const postHabitRecord = async(habitName: string, habitDescription: string, frequency: string, goal: number) => {
+export const postHabitRecord = async(habitName: string, habitDescription: string, frequency: string, goal: number,  count: number, createdAt: Date, updatedAt: Date) => {
   try{
     const response = await fetch("http://localhost:3001/api/habitRecords", {
       method: "POST",
@@ -26,6 +26,9 @@ export const postHabitRecord = async(habitName: string, habitDescription: string
         "habitDescription": habitDescription,
         "frequency": frequency,
         "goal": goal,
+        "count": count,
+        "createdAt": createdAt,
+        "updatedAt": updatedAt,
       })
     })
 

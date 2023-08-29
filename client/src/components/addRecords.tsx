@@ -9,14 +9,17 @@ interface ChildProps {
   setHandleFetch: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const AddRecordsModal: React.FC<ChildProps> = ({handleFetch, setHandleFetch}) => {
+const AddRecordsModal: React.FC<ChildProps> = ({ handleFetch, setHandleFetch }) => {
 
   // state variables
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [habitName, setHabitName] = useState<string>("");
   const [habitDescription, setHabitDescription] = useState<string>("");
-  const [frequency, setFrequency] = useState<string>("daily");
+  const [frequency, setFrequency] = useState<string>("Daily");
   const [goal, setGoal] = useState<any>('');
+  const [count, setCount] = useState<number>(0);
+  const [createdAt, setCreatedAt] = useState<Date>(new Date());
+  const [updatedAt, setUpdatedAt] = useState<Date>(new Date());
 
   // function to close modal
   function closeModal() {
@@ -31,13 +34,16 @@ const AddRecordsModal: React.FC<ChildProps> = ({handleFetch, setHandleFetch}) =>
   // function to handle modal form submit 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    const data = await postHabitRecord(habitName, habitDescription, frequency, Number(goal));
+    const data = await postHabitRecord(habitName, habitDescription, frequency, Number(goal), count, createdAt, updatedAt);
     console.log(data);
     setHabitName("");
     setHabitDescription("");
-    setFrequency("daily");
+    setFrequency("Daily");
     setGoal('');
-    closeModal(); 
+    setCount(0);
+    setCreatedAt(new Date());
+    setUpdatedAt(new Date());
+    closeModal();
     setHandleFetch(!handleFetch);
   };
 
@@ -102,7 +108,7 @@ const AddRecordsModal: React.FC<ChildProps> = ({handleFetch, setHandleFetch}) =>
                 {/* form to get details for adding new habit */}
                 <form onSubmit={handleSubmit} className="mt-6 space-y-6">
 
-                  <div className="grid grid-cols-2 gap-4">    
+                  <div className="grid grid-cols-2 gap-4">
                     {/* Habit name element */}
                     <div>
                       <label htmlFor="habitName" className="block text-sm font-medium text-gray-700">
@@ -139,19 +145,19 @@ const AddRecordsModal: React.FC<ChildProps> = ({handleFetch, setHandleFetch}) =>
                       />
                     </div>
                   </div>
-                  
+
                   {/* Frequency element */}
                   <div className="grid grid-cols-2 gap-4">
                     <div>
                       <label htmlFor="frequency" className="block text-sm font-medium text-gray-700">
                         Frequency
                       </label>
-                      <select id="frequency" name="frequency" defaultValue={"daily"} onChange={(e) => {
+                      <select id="frequency" name="frequency" defaultValue={"Daily"} onChange={(e) => {
                         setFrequency(e.target.value);
                       }} className="text-gray-700 text-sm p-2">
-                        <option value={"daily"}>Daily</option>
-                        <option value={"weekly"}>Weekly</option>
-                        <option value={"monthly"}>Monthly</option>
+                        <option value={"Daily"}>Daily</option>
+                        <option value={"Weekly"}>Weekly</option>
+                        <option value={"Monthly"}>Monthly</option>
                       </select>
                     </div>
 
@@ -182,8 +188,11 @@ const AddRecordsModal: React.FC<ChildProps> = ({handleFetch, setHandleFetch}) =>
                       onClick={() => {
                         setHabitName("");
                         setHabitDescription("");
-                        setFrequency("daily");
+                        setFrequency("Daily");
                         setGoal('');
+                        setCount(0);
+                        setCreatedAt(new Date());
+                        setUpdatedAt(new Date());
                         closeModal();
                       }}
                       className=" py-2 px-4 border shadow-sm text-sm font-medium rounded-md text-black border-gray-300 bg-white hover:bg-indigo-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-100"

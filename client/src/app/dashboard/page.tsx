@@ -6,6 +6,7 @@ import Link from "next/link";
 import Footer from "../../components/footer";
 import AddRecords from "@/components/addRecords";
 import { getHabitRecords } from "../api/crud/route";
+import HabitCard from "@/components/habitCard";
 
 interface HabitRecord {
   "_id": string,
@@ -13,6 +14,7 @@ interface HabitRecord {
   "habitDescription": string;
   "frequency": string;
   "goal": number;
+  "count": number;
 }
 
 const Dashboard = () => {
@@ -36,14 +38,29 @@ const Dashboard = () => {
         <Header />
         <div className="body p-2">
           <div className="">
-            <div className="p-2 inline-flex border">Habits</div>
+            <div className="flex justify-between items-center mb-2">
+              <div className="flex space-x-2">
+                <div className="ml-2 p-2 border rounded-md bg-white text-black h-1/2">
+                  All Habits
+                </div>
+                <div className="ml-2 p-2 border rounded-md bg-gray-500 text-black h-1/2">
+                  Achievements
+                </div>
+              </div>
+              <div>
+                <AddRecords handleFetch={handleFetch} setHandleFetch={setHandleFetch} />
+              </div>
+            </div>
             <div className="text-white">
-              <AddRecords handleFetch={handleFetch} setHandleFetch={setHandleFetch} />
-              {records.map((record) => <p key={record._id}>Habit Name: {record.habitName}</p>)}
+              <div className="p-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {records?.map((record) => (
+                  <HabitCard key={record._id} record={record} />
+                ))}
+              </div>
             </div>
           </div>
         </div>
-        <div className="text-center absolute bottom-0 left-1/2 trasnform -translate-x-1/2 -translate-y-1/2">
+        <div className="text-center relative bottom-0 left-1/2 trasnform -translate-x-1/2 -translate-y-1/2">
             <Footer />
         </div>
     </div>
