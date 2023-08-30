@@ -29,6 +29,9 @@ const Dashboard = () => {
     setRecords(data);
   }
 
+  let recLength = records.length;
+  let pos = recLength < 6 ? "absolute" : "relative";
+
   useEffect(() => {
     habitRecords();
   }, [handleFetch])
@@ -60,7 +63,7 @@ const Dashboard = () => {
             </div>
           </div>
         </div>
-        <div className="text-center relative bottom-0 left-1/2 trasnform -translate-x-1/2 -translate-y-1/2">
+        <div className={`text-center ${pos} bottom-0 left-1/2 trasnform -translate-x-1/2 -translate-y-1/2`}>
             <Footer />
         </div>
     </div>

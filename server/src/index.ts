@@ -10,7 +10,7 @@ app.use(express.json());
 
 connectToDB()
     .then((db: any) => {
-        // Set up your routes and other app logic here
+        // get list of habit records
         app.get("/api/habitRecords", async (req, res) => {
             try{
                 const db = await connectToDB();
@@ -21,7 +21,7 @@ connectToDB()
                 res.status(500).json({error: "Internal server error"})
             }
         })
-
+        // add new habit record
         app.post("/api/habitRecords", async(req, res) => {
             try{
                 const db = await connectToDB();
@@ -33,6 +33,24 @@ connectToDB()
                 res.status(500).json({error: "Internal server error"});
             }
         })
+
+        // update count of a habit record
+        app.put("/api/setCount/:id", async(req, res) => {
+            try{
+                const { id } = req.params;
+                const db = await connectToDB();
+                const updateRecord = req.body;
+                const result = await db.collection("habitsData").findByIdAndUpdate(id, updateRecord, {new: true,});
+                if(!result){
+                    return res.status(404).json({ message: 'Record not found' });
+                }
+                return res.status(200).json({text: "Record updated successfully"}); 
+            } catch(error) {
+                return res.status(500).json({ message: 'Error updating record', error });
+
+            }
+        })
+
 
         app.listen(port, () => {
             console.log(`Server is running on port ${port}`);
