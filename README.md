@@ -7,17 +7,17 @@ You can login as a guest and test our application, also you can signup to persis
 
 ## Technologies used: :hammer_and_wrench:
 ### Frontend :computer:
-Next Js
-Typescript 
-Tailwind CSS
+- Next Js
+- Typescript 
+- Tailwind CSS
 
 ### Backend :gear:
-Node Js
-Express Js
-Mongo DB
+- Node Js
+- Express Js
+- Mongo DB
 
 ### Deployment :incoming_envelope:
-Frontend - Vercel
+- Frontend - Vercel
 
 ## Project Status: :card_file_box:
 ### Completed :white_check_mark:
