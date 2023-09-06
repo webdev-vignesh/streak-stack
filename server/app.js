@@ -1,20 +1,45 @@
 const express = require('express');
 const dotenv = require('dotenv').config();
 const connectDb = require('./config/dbConnection');
+const Habit = require("./models/habitModel");
 
-const habitRouter = require("./routes/habitRoutes");
-
-connectDb();
+// const habitRouter = require("./routes/habitRoutes");
 
 const app = express();
 const port = process.env.PORT || 3001;
 
 app.use(express.json());
 
-app.use("/api/habitRecords", habitRouter);
+// get all habits
+app.get("/api/habitRecords", async(req, res) => {
+    try {
+        const habits = await Habit.find({});
+        res.status(200).json(habits);
+    } catch (error) {
+        res.status(500).json({message: error.message});
+    }
+});
 
-app.listen(port, () => {
-    console.log(`Server is running on port ${port}`)
+// add a new habit record
+app.post('/api/habitRecords', async(req, res) => {
+    try {
+        const habits = await Habit.create(req.body)
+        res.status(200).json(habits);
+        
+    } catch (error) {
+        console.log(error.message);
+        res.status(500).json({message: error.message})
+    }
+})
+
+connectDb()
+.then(() => {
+    app.listen(port, () => {
+        console.log(`Server is running on port ${port}`)
+    })
+})
+.catch((error) => {
+    console.log(error);
 })
 
 //     .then((db) => {
