@@ -34,17 +34,18 @@ const AddRecordsModal: React.FC<ChildProps> = ({ handleFetch, setHandleFetch }) 
   // function to handle modal form submit 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    const data = await postHabitRecord(habitName, habitDescription, frequency, Number(goal), count, createdAt, updatedAt);
-    console.log(data);
-    setHabitName("");
-    setHabitDescription("");
-    setFrequency("Daily");
-    setGoal('');
-    setCount(0);
-    setCreatedAt(new Date());
-    setUpdatedAt(new Date());
-    closeModal();
-    setHandleFetch(!handleFetch);
+    const data = await postHabitRecord(habitName, habitDescription, frequency, Number(goal), count);
+    if(data){
+      setHabitName("");
+      setHabitDescription("");
+      setFrequency("Daily");
+      setGoal('');
+      setCount(0);
+      setCreatedAt(new Date());
+      setUpdatedAt(new Date());
+      closeModal();
+      setHandleFetch(!handleFetch);
+    }
   };
 
   return (
@@ -54,7 +55,7 @@ const AddRecordsModal: React.FC<ChildProps> = ({ handleFetch, setHandleFetch }) 
         <button
           type="button"
           onClick={openModal}
-          className="rounded-md bg-green-500 shadow-md px-4 py-2 text-sm font-medium text-white "
+          className="rounded-md bg-green-500 dark:bg-green-500 shadow-md px-4 py-2 text-sm font-medium text-white"
         >
           + Create new habit
         </button>

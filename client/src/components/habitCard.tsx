@@ -1,5 +1,6 @@
 'use client';
 
+import { deleteHabitRecord } from '@/app/api/crud/route';
 import React, { useState } from 'react';
 import { AiOutlineCheckCircle, AiOutlineCloseCircle, AiOutlineDelete } from "react-icons/ai";
 import { TbMoodEdit } from "react-icons/tb";
@@ -14,9 +15,11 @@ interface habitCardData {
         habitName: string,
         count: number,
     },
+    handleFetch: boolean;
+    setHandleFetch: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const HabitCard: React.FC<habitCardData> = ({ record}) => {
+const HabitCard: React.FC<habitCardData> = ({ record, handleFetch, setHandleFetch}) => {
 
   const [hover, setHover] = useState<boolean>(false);
   const [cardStatus, setCardStatus] = useState<boolean>(false);
@@ -36,8 +39,8 @@ const HabitCard: React.FC<habitCardData> = ({ record}) => {
   }
 
   const handleClose = () => {
-    setCardStatus(true);
     setBgColor('red');
+    setCardStatus(true);
   }
 
   const handleUpdate = () => {
@@ -45,8 +48,16 @@ const HabitCard: React.FC<habitCardData> = ({ record}) => {
     setBgColor('sky');
   }
 
+  const handleDelete = async (id: string) => {
+    const response = await deleteHabitRecord(id);
+    if(response){
+      setHandleFetch(!handleFetch);
+      console.log(response);
+    }
+  }
+
   return (
-    <div className={`border border-yellow-400 bg-${bgColor}-500 shadow-md shadow-rose-500 hover:cursor-pointer hover:bg-${bgColor}-800 p-3 rounded-md space-y-3 mb-4 h-32`} onMouseEnter={handleMouseEnter} onMouseLeave={hanldeMouseLeave} >
+    <div className={`border border-yellow-400 bg-${bgColor}-500 dark:bg-${bgColor}-500 shadow-md shadow-rose-500 hover:cursor-pointer hover:bg-${bgColor}-800 p-3 rounded-md space-y-3 mb-4 h-32`} onMouseEnter={handleMouseEnter} onMouseLeave={hanldeMouseLeave} >
         <p className='font-bold text-lg'>{record?.habitName}</p>
         <div className='flex justify-between items-center'>
           <p className='text-md '>{record?.habitDescription}</p>
@@ -59,7 +70,7 @@ const HabitCard: React.FC<habitCardData> = ({ record}) => {
                 <button onClick={handleUpdate} className='text-3xl hover:text-yellow-500'>
                   <TbMoodEdit />
                 </button>
-                <button  className='text-3xl hover:text-red-500 hover:fill-red-500'>
+                <button onClick={() => {handleDelete(record._id)}} className='text-3xl hover:text-red-500 hover:fill-red-500'>
                   <AiOutlineDelete />
                 </button>
               </div>)

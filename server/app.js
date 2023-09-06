@@ -2,14 +2,15 @@ const express = require('express');
 const dotenv = require('dotenv').config();
 const connectDb = require('./config/dbConnection');
 const Habit = require("./models/habitModel");
+const cors = require("cors");
 // const habitRouter = require("./routes/habitRoutes");
 
 const app = express();
 const port = process.env.PORT || 3001;
 
-app.use(express.json())
-app.use(express.urlencoded({extended: false}))
 app.use(express.json());
+app.use(express.urlencoded({extended: false}));
+app.use(cors());
 
 
 // get all habits
@@ -26,7 +27,7 @@ app.get("/api/habitRecords", async(req, res) => {
 app.get("/api/habitRecords/:id", async(req, res) => {
     try {
         const {id} = req.params;
-        const habits = await Habit.find({});
+        const habits = await Habit.findById(id);
         res.status(200).json(habits);
     } catch (error) {
         res.status(500).json({message: error.message});
