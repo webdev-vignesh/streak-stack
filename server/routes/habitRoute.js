@@ -4,7 +4,7 @@ const Habit = require("../models/habitModel");
 const router = express.Router();
 
 // get all habits
-router.get("/habitRecords", async(req, res) => {
+router.get("/", async(req, res) => {
     try {
         const habits = await Habit.find({});
         res.status(200).json(habits);
@@ -14,7 +14,7 @@ router.get("/habitRecords", async(req, res) => {
 });
 
 // get a habit with id
-router.get("/habitRecords/:id", async(req, res) => {
+router.get("/:id", async(req, res) => {
     try {
         const {id} = req.params;
         const habits = await Habit.findById(id);
@@ -25,7 +25,7 @@ router.get("/habitRecords/:id", async(req, res) => {
 });
 
 // add a new habit record
-router.post('/habitRecords', async(req, res) => {
+router.post('/', async(req, res) => {
     try {
         const habits = await Habit.create(req.body)
         res.status(200).json(habits);
@@ -37,7 +37,7 @@ router.post('/habitRecords', async(req, res) => {
 })
 
 // update a new habit record
-router.put('/habitRecords/:id', async(req, res) => {
+router.put('/:id', async(req, res) => {
     try {
         const {id} = req.params;
         const habits = await Habit.findByIdAndUpdate(id, req.body)
@@ -55,7 +55,7 @@ router.put('/habitRecords/:id', async(req, res) => {
 })
 
 // delete a new habit record
-router.delete('/habitRecords/:id', async(req, res) => {
+router.delete('/:id', async(req, res) => {
     try {
         const {id} = req.params;
         const habits = await Habit.findByIdAndDelete(id);
