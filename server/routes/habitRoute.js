@@ -1,74 +1,21 @@
 const express = require("express");
-const Habit = require("../models/habitModel");
+const { getAllHabits, getHabitWithId, createHabit, updateHabit, deleteHabit } = require("../controllers/habitController");
 
 const router = express.Router();
 
 // get all habits
-router.get("/", async(req, res) => {
-    try {
-        const habits = await Habit.find({});
-        res.status(200).json(habits);
-    } catch (error) {
-        res.status(500).json({message: error.message});
-    }
-});
+router.get("/", getAllHabits);
 
-// get a habit with id
-router.get("/:id", async(req, res) => {
-    try {
-        const {id} = req.params;
-        const habits = await Habit.findById(id);
-        res.status(200).json(habits);
-    } catch (error) {
-        res.status(500).json({message: error.message});
-    }
-});
+// get a single habit with id
+router.get("/:id", getHabitWithId);
 
-// add a new habit record
-router.post('/', async(req, res) => {
-    try {
-        const habits = await Habit.create(req.body)
-        res.status(200).json(habits);
-        
-    } catch (error) {
-        console.log(error.message);
-        res.status(500).json({message: error.message})
-    }
-})
+// create a new habit record
+router.post('/', createHabit)
 
-// update a new habit record
-router.put('/:id', async(req, res) => {
-    try {
-        const {id} = req.params;
-        const habits = await Habit.findByIdAndUpdate(id, req.body)
-        // if data with given id not found
-        if(!habits){
-            return res.send(404).json({message: `cannot find any record with ${id}`});
-        }
-        const updatedHabit = await Habit.findById(id);
-        res.status(200).json(updatedHabit);
-        
-    } catch (error) {
-        console.log(error.message);
-        res.status(500).json({message: error.message})
-    }
-})
+// update a habit record
+router.put('/:id', updateHabit)
 
 // delete a new habit record
-router.delete('/:id', async(req, res) => {
-    try {
-        const {id} = req.params;
-        const habits = await Habit.findByIdAndDelete(id);
-        // if data with given id not found
-        if(!habits){
-            return res.send(404).json({message: `cannot find any record with ${id}`});
-        }
-        res.status(200).json(habits);
-        
-    } catch (error) {
-        console.log(error.message);
-        res.status(500).json({message: error.message})
-    }
-})
+router.delete('/:id', deleteHabit)
 
 module.exports = router;
