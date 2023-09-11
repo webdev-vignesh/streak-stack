@@ -1,4 +1,3 @@
-import Image from "next/image"
 import { Inter } from "next/font/google"
 import { AiFillGithub } from "react-icons/ai";
 import Link from "next/link";
@@ -8,11 +7,13 @@ import BackImg from "../../public/bg.jpg";
 const inter = Inter({ subsets: ["latin"] })
 
 export default function Home() {
+
+
   return (
     <main className="p-4 bg-gradient-to-r from-blue-800 to-indigo-900" style={{backgroundImage: `url(${BackImg})`}}>
       <nav className="flex justify-between">
         <div>
-          <p>Streak⚡Stack</p>
+          <p className="hover:cursor-pointer select-none">Streak⚡Stack</p>
         </div>
         <div className="flex justify-between items-center space-x-4">
           <button>Pricing</button>

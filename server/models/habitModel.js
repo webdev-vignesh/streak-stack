@@ -23,6 +23,18 @@ const habitSchema = mongoose.Schema(
             type: String,
             required: true,
         },
+        habitHistory: [
+            {
+                date: {
+                    type: Date,
+                    required: true,
+                },
+                status: {
+                    type: Boolean,
+                    required: true,
+                },
+            },
+        ],
     },
     {
         timestamps: true

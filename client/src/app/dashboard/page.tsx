@@ -2,19 +2,25 @@
 
 import React, { useEffect, useState } from "react";
 import Header from "../../components/header";
-import Link from "next/link";
 import Footer from "../../components/footer";
 import AddRecords from "@/components/addRecords";
-import { getHabitRecords } from "../api/crud/route";
 import HabitCard from "@/components/habitCard";
+import { getHabitRecords } from "../api/crud/route";
+
+interface HabitHistoryItem {
+  date: Date; 
+  status: boolean;
+  _id: string;
+}
 
 interface HabitRecord {
-  "_id": string,
-  "habitName": string;
-  "habitDescription": string;
-  "frequency": string;
-  "goal": number;
-  "count": number;
+  _id: string,
+  habitName: string;
+  habitDescription: string;
+  frequency: string;
+  goal: number;
+  count: number;
+  habitHistory: HabitHistoryItem[];
 }
 
 const Dashboard = () => {

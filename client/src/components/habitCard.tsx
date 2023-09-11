@@ -1,19 +1,26 @@
 'use client';
 
-import { deleteHabitRecord } from '@/app/api/crud/route';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { deleteHabitRecord, updateHabitRecord } from '@/app/api/crud/route';
 import { AiOutlineCheckCircle, AiOutlineCloseCircle, AiOutlineDelete } from "react-icons/ai";
 import { TbMoodEdit } from "react-icons/tb";
+
+interface HabitHistoryItem {
+  date: Date; 
+  status: boolean;
+  _id: string;
+}
 
 interface habitCardData {
     key: string,
     record: {
-        _id: string,
-        frequency: string,
-        goal: number,
-        habitDescription: string,
-        habitName: string,
-        count: number,
+      _id: string,
+      frequency: string,
+      goal: number,
+      habitDescription: string,
+      habitName: string,
+      count: number,
+      habitHistory: any,
     },
     handleFetch: boolean;
     setHandleFetch: React.Dispatch<React.SetStateAction<boolean>>;
@@ -23,7 +30,8 @@ const HabitCard: React.FC<habitCardData> = ({ record, handleFetch, setHandleFetc
 
   const [hover, setHover] = useState<boolean>(false);
   const [cardStatus, setCardStatus] = useState<boolean>(false);
-  const [bgColor, setBgColor] = useState<string>('sky');
+  const [lastUpdatedDate, setLastUpdatedDate] = useState(null);
+  const [bgColor, setBgColor] = useState<string>('bg-sky-500');
 
   const handleMouseEnter = () =>{
     setHover(true);
@@ -33,21 +41,34 @@ const HabitCard: React.FC<habitCardData> = ({ record, handleFetch, setHandleFetc
     setHover(false);
   }
 
-  const handleCheck = () => {
-    setCardStatus(true);
-    setBgColor('green');
+  const handleCheck = async () => {
+    const status = true;
+    const response = await updateHabitRecord(record._id, status);
+    console.log(response);
+    if(response){
+      setCardStatus(true);
+      setBgColor('bg-green-500');
+      setHandleFetch(!handleFetch);
+    }
   }
 
-  const handleClose = () => {
-    setBgColor('red');
-    setCardStatus(true);
+  const handleClose = async () => {
+    const status = false;
+    const response = await updateHabitRecord(record._id, status);
+    console.log(response);
+    if(response){
+      setBgColor('bg-red-500');
+      setCardStatus(true);
+      setHandleFetch(!handleFetch);
+    }
   }
 
   const handleUpdate = () => {
     setCardStatus(false);
-    setBgColor('sky');
+    setBgColor('bg-sky-500');
   }
 
+  // function to delete a habit record
   const handleDelete = async (id: string) => {
     const response = await deleteHabitRecord(id);
     if(response){
@@ -56,8 +77,22 @@ const HabitCard: React.FC<habitCardData> = ({ record, handleFetch, setHandleFetc
     }
   }
 
+  useEffect(() => {
+    if(
+      record?.habitHistory[record?.habitHistory?.length - 1]?.date.split("T")[0]
+      ===
+      new Date().toISOString().split("T")[0]
+    ) {
+      if(record?.habitHistory[record?.habitHistory?.length - 1].status === true){
+        setBgColor('bg-green-500');
+      } else if(record?.habitHistory[record?.habitHistory?.length - 1].status === false) {
+        setBgColor("bg-red-500");
+      }
+    }
+  }, []);
+
   return (
-    <div className={`border border-yellow-400 bg-${bgColor}-500 dark:bg-${bgColor}-500 shadow-md shadow-rose-500 hover:cursor-pointer hover:bg-${bgColor}-800 p-3 rounded-md space-y-3 mb-4 h-32`} onMouseEnter={handleMouseEnter} onMouseLeave={hanldeMouseLeave} >
+    <div className={`border border-yellow-400 ${bgColor} dark:${bgColor} shadow-md shadow-rose-500 hover:cursor-pointer hover:${bgColor} p-3 rounded-md space-y-3 mb-4`} onMouseEnter={handleMouseEnter} onMouseLeave={hanldeMouseLeave} >
         <p className='font-bold text-lg'>{record?.habitName}</p>
         <div className='flex justify-between items-center'>
           <p className='text-md '>{record?.habitDescription}</p>
@@ -67,18 +102,22 @@ const HabitCard: React.FC<habitCardData> = ({ record, handleFetch, setHandleFetc
               cardStatus 
               ?
               (<div className='flex space-x-4'>
+                {/* button to update the habit status */}
                 <button onClick={handleUpdate} className='text-3xl hover:text-yellow-500'>
                   <TbMoodEdit />
                 </button>
+                {/* button to delete the habit  */}
                 <button onClick={() => {handleDelete(record._id)}} className='text-3xl hover:text-red-500 hover:fill-red-500'>
                   <AiOutlineDelete />
                 </button>
               </div>)
               :            
               (<div className='flex space-x-4'>
+                  {/* button to mark the habit status as completed */}
                   <button onClick={handleCheck} className='text-3xl hover:text-green-500 '>
                     <AiOutlineCheckCircle />
                   </button>
+                  {/* button to mark the habit status as failed */}
                   <button onClick={handleClose} className='text-3xl hover:text-red-500'>
                     <AiOutlineCloseCircle />
                   </button>
