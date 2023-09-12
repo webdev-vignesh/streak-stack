@@ -44,7 +44,6 @@ const HabitCard: React.FC<habitCardData> = ({ record, handleFetch, setHandleFetc
   const handleCheck = async () => {
     const status = true;
     const response = await updateHabitRecord(record._id, status);
-    console.log(response);
     if(response){
       setCardStatus(true);
       setBgColor('bg-green-500');
@@ -77,6 +76,7 @@ const HabitCard: React.FC<habitCardData> = ({ record, handleFetch, setHandleFetc
     }
   }
 
+  // useEffect to set the card color based on last history date status
   useEffect(() => {
     if(
       record?.habitHistory[record?.habitHistory?.length - 1]?.date.split("T")[0]
