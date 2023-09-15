@@ -1,4 +1,6 @@
+import Header from '@/components/header'
 import './globals.css'
+import { NextAuthProvider } from './Providers'
 
 export const metadata = {
   title: 'Streak⚡Stack',
@@ -12,7 +14,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className='bg-gradient-to-r from-blue-800 to-indigo-900'>
-      <body>{children}</body>
+      <body>
+          <NextAuthProvider>          
+            <div>
+              <Header/>
+              {children}
+            </div>
+          </NextAuthProvider>
+        </body>
     </html>
   )
 }
