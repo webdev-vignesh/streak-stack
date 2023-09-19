@@ -5,6 +5,8 @@ import Footer from "../../components/footer";
 import AddRecords from "@/components/addRecords";
 import HabitCard from "@/components/habitCard";
 import { getHabitRecords } from "../api/crud/route";
+import { signOut, useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 interface HabitHistoryItem {
   date: Date; 
@@ -27,12 +29,17 @@ const Dashboard = () => {
   // local state variables
   const [records, setRecords] = useState<Array<HabitRecord>>([]);
   const [handleFetch, setHandleFetch] = useState<boolean>(false);
+
+  const router = useRouter();
   
   // function to get the habit data records
   const habitRecords =async () => {
     const data = await getHabitRecords();
     setRecords(data);
   }
+
+  const {status} = useSession();
+  console.log(status)
 
   let recLength = records?.length;
   let pos = recLength < 6 ? "absolute" : "relative";
@@ -59,6 +66,7 @@ const Dashboard = () => {
                   </div>
                 </div>
                 <div>
+                  <button onClick={() => {signOut(); router.push('/')}}>Sign Out</button>
                   <AddRecords handleFetch={handleFetch} setHandleFetch={setHandleFetch} />
                 </div>
               </div>
