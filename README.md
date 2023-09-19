@@ -24,10 +24,10 @@ You can login as a guest and test the application, you can also signup to save a
 - [x] ~~Landing Page~~
 - [x] ~~Dashboard~~
 - [x] ~~Create, Read habits functionality~~
+- [x] ~~Update, Delete functionlaity~~
 
 ### ToDo's :memo:
-- [ ] Update, Delete functionlaity
+- [ ] Login and authentication - multiuser access (50% loading...)
+- [ ] Payment and pricing integration
 - [ ] Charts for showing records and achievemnts
 - [ ] DB schema modification work
-- [ ] Login and authentication - multiuser access
-- [ ] Payment and pricing integration
