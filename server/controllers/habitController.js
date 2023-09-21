@@ -3,8 +3,10 @@ const asyncHandler = require('express-async-handler')
 
 // get all habits
 const getAllHabits = asyncHandler (async(req, res) => {
+    const email = req.query.email;
     try {
-        const habits = await Habit.find({});
+        const habits = await Habit.find({"email": email});
+        console.log(habits)
         res.status(200).json(habits);
     } catch (error) {
         res.status(500);
@@ -33,6 +35,7 @@ const getHabitWithId = asyncHandler (async(req, res) => {
 const createHabit = asyncHandler (async(req, res) => {
     try {
         const habits = await Habit.create(req.body);
+        console.log(req.body)
         res.status(200).json(habits);
         
     } catch (error) {
@@ -41,6 +44,7 @@ const createHabit = asyncHandler (async(req, res) => {
     }
 })
 
+// update a habit record
 const updateHabit = asyncHandler(async (req, res) => {
     try {
         const { id } = req.params;
@@ -164,7 +168,7 @@ const updateHabit = asyncHandler(async (req, res) => {
 });
   
 
-// delete a new habit record
+// delete a habit record
 const deleteHabit = asyncHandler (async(req, res) => {
     try {
         const {id} = req.params;
