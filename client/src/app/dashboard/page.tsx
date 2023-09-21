@@ -30,6 +30,7 @@ const Dashboard = () => {
   const [records, setRecords] = useState<Array<HabitRecord>>([]);
   const [handleFetch, setHandleFetch] = useState<boolean>(false);
 
+  // nextjs router
   const router = useRouter();
   
   // function to get the habit data records
@@ -38,12 +39,18 @@ const Dashboard = () => {
     setRecords(data);
   }
 
-  const {status} = useSession();
-  console.log(status)
+  // nextAuth session status
+  const {status, data: session} = useSession();
+
+  // if user logged out, redirecting to landing page
+  if (status === 'unauthenticated') {
+    router.push('/');
+  }
 
   let recLength = records?.length;
   let pos = recLength < 6 ? "absolute" : "relative";
 
+  // useEffect to call habitRecords function whenever CRUD operations are performed
   useEffect(() => {
     habitRecords();
   }, [handleFetch])
@@ -66,7 +73,7 @@ const Dashboard = () => {
                   </div>
                 </div>
                 <div>
-                  <button onClick={() => {signOut(); router.push('/')}}>Sign Out</button>
+                  <button onClick={() => {signOut()}}>Sign Out</button>
                   <AddRecords handleFetch={handleFetch} setHandleFetch={setHandleFetch} />
                 </div>
               </div>
