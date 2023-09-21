@@ -23,6 +23,10 @@ const habitSchema = mongoose.Schema(
             type: String,
             required: true,
         },
+        email: {
+            type: String,
+            required: true,
+        },
         habitHistory: [
             {
                 date: {
