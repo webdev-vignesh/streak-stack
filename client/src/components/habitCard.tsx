@@ -31,7 +31,7 @@ const HabitCard: React.FC<habitCardData> = ({ record, handleFetch, setHandleFetc
   const [hover, setHover] = useState<boolean>(false);
   const [cardStatus, setCardStatus] = useState<boolean>(false);
   const [lastUpdatedDate, setLastUpdatedDate] = useState(null);
-  const [bgColor, setBgColor] = useState<string>('bg-sky-500');
+  const [bgColor, setBgColor] = useState<string>('bg-yellow-500');
 
   const handleMouseEnter = () =>{
     setHover(true);
@@ -64,7 +64,7 @@ const HabitCard: React.FC<habitCardData> = ({ record, handleFetch, setHandleFetc
 
   const handleUpdate = () => {
     setCardStatus(false);
-    setBgColor('bg-sky-500');
+    setBgColor('bg-yellow-500');
   }
 
   // function to delete a habit record
