@@ -26,21 +26,24 @@ interface HabitRecord {
 
 const Dashboard = () => {
 
+  
   // local state variables
   const [records, setRecords] = useState<Array<HabitRecord>>([]);
   const [handleFetch, setHandleFetch] = useState<boolean>(false);
-
-  // nextjs router
-  const router = useRouter();
   
-  // function to get the habit data records
-  const habitRecords =async () => {
-    const data = await getHabitRecords();
-    setRecords(data);
-  }
-
   // nextAuth session status
   const {status, data: session} = useSession();
+  const email = session?.user?.email;
+  
+  // nextjs router
+  const router = useRouter();
+
+  
+  // function to get the habit data records
+  const habitRecords = async () => {
+    const data = await getHabitRecords(email);
+    setRecords(data);
+  }
 
   // if user logged out, redirecting to landing page
   if (status === 'unauthenticated') {
@@ -63,17 +66,13 @@ const Dashboard = () => {
               <div className="flex justify-between items-center mb-2">
                 <div className="flex space-x-2">
                   <div className="ml-2 p-2 border rounded-md bg-white text-black h-1/2 hover:cursor-pointer">
-                    Dashboard
+                    My Habits
                   </div>
                   <div className="ml-2 p-2 border rounded-md bg-gray-500 text-black h-1/2 hover:cursor-pointer">
-                    All Habits
-                  </div>
-                  <div className="ml-2 p-2 border rounded-md bg-gray-500 text-black h-1/2 hover:cursor-pointer">
-                    Achievements
+                    Progress
                   </div>
                 </div>
                 <div>
-                  <button onClick={() => {signOut()}}>Sign Out</button>
                   <AddRecords handleFetch={handleFetch} setHandleFetch={setHandleFetch} />
                 </div>
               </div>
