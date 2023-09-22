@@ -17,7 +17,7 @@ const SignInBtn = () => {
                     router.push('/dashboard')
                 :
                     <button 
-                className="rounded-lg flex items-center shadow-xl bg-white"
+                className="rounded-lg flex items-center shadow-xl bg-white dark:bg-white"
                 onClick={() => {signIn("google")}}
                 >
                         <Image src={GoogleLogo} alt="Google" className=" m-2" height={30} width={30} />
