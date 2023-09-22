@@ -3,6 +3,7 @@
 import React, { useState, Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { postHabitRecord } from "@/app/api/crud/route";
+import { useSession } from "next-auth/react";
 
 interface ChildProps {
   handleFetch: boolean;
@@ -10,6 +11,9 @@ interface ChildProps {
 }
 
 const AddRecordsModal: React.FC<ChildProps> = ({ handleFetch, setHandleFetch }) => {
+
+  const { status, data: session} = useSession();
+  const email: string = session?.user?.email ?? '';
 
   // state variables
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -34,7 +38,7 @@ const AddRecordsModal: React.FC<ChildProps> = ({ handleFetch, setHandleFetch }) 
   // function to handle modal form submit 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    const data = await postHabitRecord(habitName, habitDescription, frequency, Number(goal), count);
+    const data = await postHabitRecord(habitName, habitDescription, frequency, Number(goal), count, email);
     if(data){
       setHabitName("");
       setHabitDescription("");
@@ -55,7 +59,7 @@ const AddRecordsModal: React.FC<ChildProps> = ({ handleFetch, setHandleFetch }) 
         <button
           type="button"
           onClick={openModal}
-          className="rounded-md bg-green-500 dark:bg-green-500 shadow-md px-4 py-2 text-sm font-medium text-white"
+          className="rounded-md bg- shadow-md px-4 py-2 text-sm font-medium bg-white text-black"
         >
           + Create new habit
         </button>
@@ -202,7 +206,7 @@ const AddRecordsModal: React.FC<ChildProps> = ({ handleFetch, setHandleFetch }) 
                     </button>
                     <button
                       type="submit"
-                      className=" py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                      className=" py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-green-500 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
                     >
                       Add Record
                     </button>
