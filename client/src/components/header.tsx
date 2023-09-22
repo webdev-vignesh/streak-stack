@@ -7,6 +7,7 @@ import { FaRegCircleUser } from "react-icons/fa6";
 import { usePathname, useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
+import UserDropdown from "./userDropdown";
 
 const Header = () => {
 
@@ -29,16 +30,16 @@ const Header = () => {
                             : "Go Pro"
                     }
                 </Link>
-                <p className="hover: cursor-pointer">
+                <div className="hover: cursor-pointer">
                     {
                         (pathName === "/"|| pathName === "/signIn" ) 
                         ? 
                             <Link href={'https://github.com/webdev-vignesh/streak-stack'} target="_blank">
                                 <AiFillGithub />
                             </Link> 
-                        : <Image src={session?.user?.image} alt={'user'} width={30} height={30} className="rounded-full" />
+                        : <><UserDropdown /></>
                     }
-                </p>
+                </div>
                 <p></p>
             </div>
         </div>
