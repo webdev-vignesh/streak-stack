@@ -3,7 +3,7 @@ const asyncHandler = require('express-async-handler')
 
 // get all habits
 const getAllHabits = asyncHandler (async(req, res) => {
-    const email = req.query.email;
+    const habits = await Habit.find({"email": email});
     try {
         const habits = await Habit.find({"email": email});
         console.log(habits)
