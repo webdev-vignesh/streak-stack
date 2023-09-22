@@ -39,7 +39,7 @@ export default function Home() {
           <p className="text-lg text-center">Transform your life one streak at a time!</p>
         </div>
         <div className="mt-20 flex justify-center text-center">
-          <div onClick={() => setShowModal(true)} className=" cursor-pointer border border-green-500 bg-green-500 w-1/4 p-2 rounded-md text-white">Get started for free</div>
+          <div onClick={() => setShowModal(true)} className=" cursor-pointer border border-green-500 bg-green-500 md:w-1/4 p-2 rounded-md text-white">Get started for free</div>
         </div>
       </div>
       <div className="absolute bottom-0 left-1/2 trasnform -translate-x-1/2 -translate-y-1/2">
