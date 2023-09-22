@@ -1,7 +1,7 @@
 // API call to get the habits data
-export const getHabitRecords = async () => {
+export const getHabitRecords = async (email: string) => {
   try {
-    const response = await fetch("http://localhost:3001/api/habitRecords", {
+    const response = await fetch(`https://streak-stack-backend.onrender.com/api/habitRecords?email=${encodeURIComponent(email)}`, {
       method: "GET",
     })
     if (response.ok) {
@@ -17,9 +17,9 @@ export const getHabitRecords = async () => {
 }
 
 // API call to create a new habit to the db
-export const postHabitRecord = async (habitName: string, habitDescription: string, frequency: string, goal: number, count: number) => {
+export const postHabitRecord = async (habitName: string, habitDescription: string, frequency: string, goal: number, count: number, email: string) => {
   try {
-    const response = await fetch("http://localhost:3001/api/habitRecords", {
+    const response = await fetch("https://streak-stack-backend.onrender.com/api/habitRecords", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -30,6 +30,7 @@ export const postHabitRecord = async (habitName: string, habitDescription: strin
         "count": count,
         "goal": goal,
         "frequency": frequency,
+        "email": email,
       })
     })
 
@@ -48,7 +49,7 @@ export const postHabitRecord = async (habitName: string, habitDescription: strin
 // API call to delete a habit record
 export const deleteHabitRecord = async (id: string) => {
   try {
-    const response = await fetch(`http://localhost:3001/api/habitRecords/${id}`, {
+    const response = await fetch(`https://streak-stack-backend.onrender.com/api/habitRecords/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -71,7 +72,7 @@ export const deleteHabitRecord = async (id: string) => {
 // API call to update the status of a habit card as completed or not
 export const updateHabitRecord = async (id: string, status: boolean) => {
   try {
-    const response = await fetch(`http://localhost:3001/api/habitRecords/${id}`, {
+    const response = await fetch(`https://streak-stack-backend.onrender.com/api/habitRecords/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -80,7 +81,6 @@ export const updateHabitRecord = async (id: string, status: boolean) => {
         "status": status
       })
     });
-    console.log(status, response);
     if (response.ok) {
       const data = await response.json();
       return data;
