@@ -3,7 +3,6 @@ const asyncHandler = require('express-async-handler')
 
 // get all habits
 const getAllHabits = asyncHandler (async(req, res) => {
-    console.log(email);
     const email = decodeURIComponent(req.query.email);
     console.log(email);
     try {
