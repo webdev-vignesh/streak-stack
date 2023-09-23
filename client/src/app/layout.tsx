@@ -1,6 +1,7 @@
 import Header from '@/components/header'
 import './globals.css'
 import { NextAuthProvider } from './Providers'
+import Footer from '@/components/footer'
 
 export const metadata = {
   title: 'Streak⚡Stack',
@@ -13,12 +14,13 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className='bg-gradient-to-r from-blue-800 to-indigo-900'>
+    <html lang="en" className=''>
       <body>
           <NextAuthProvider>          
             <div>
               <Header/>
               {children}
+              <Footer />
             </div>
           </NextAuthProvider>
         </body>
