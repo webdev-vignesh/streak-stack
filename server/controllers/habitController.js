@@ -37,7 +37,7 @@ const createHabit = asyncHandler (async(req, res) => {
     try {
         const habits = await Habit.create(req.body);
         console.log(req.body)
-        res.status(200).json(habits);
+        res.status(201).json(habits);
         
     } catch (error) {
         res.status(500);
