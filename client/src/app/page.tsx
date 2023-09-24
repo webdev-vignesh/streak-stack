@@ -1,12 +1,6 @@
 'use client';
 
 import { Inter } from "next/font/google"
-import { AiFillGithub } from "react-icons/ai";
-import Link from "next/link";
-import Footer from "../components/footer";
-import SignInBtn from "@/components/signInBtn";
-import SignModal from "@/components/signInModal";
-import { useState } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
@@ -25,15 +19,15 @@ export default function Home() {
   // nextAuth session status
   const {status} = useSession();
 
-  // if already logged in, redirecting the user to dashboard
-  if (status === 'authenticated') {
-    router.push('/dashboard');
-  }
+  // // if already logged in, redirecting the user to dashboard
+  // if (status === 'authenticated') {
+  //   router.push('/dashboard');
+  // }
 
   return (
     <div >
-      <div className="flex flex-col items-center md:h-full bg-white dark:bg-gray-800">
-        <div className="mt-16 md:mt-0 md:h-1/2 md:w-1/2 dark:bg-inherit">
+      <div className="flex flex-col items-center md:h-full bg-white">
+        <div className="mt-16 md:mt-0 md:h-1/2 md:w-1/2">
           <Image src={LandingPageImage} alt="landing_image" />
         </div>
         <div className="mt-16 md:mt-0 font-semibold">
