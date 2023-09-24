@@ -6,7 +6,7 @@ import AddRecords from "@/components/addRecords";
 import HabitCard from "@/components/habitCard";
 import { getHabitRecords } from "../api/crud/route";
 import { signOut, useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 
 interface HabitHistoryItem {
   date: Date; 
@@ -25,11 +25,6 @@ interface HabitRecord {
 }
 
 const Dashboard = () => {
-
-  
-  // local state variables
-  const [records, setRecords] = useState<Array<HabitRecord>>([]);
-  const [handleFetch, setHandleFetch] = useState<boolean>(false);
   
   // nextAuth session status
   const {status, data: session} = useSession();
@@ -37,18 +32,30 @@ const Dashboard = () => {
   
   // nextjs router
   const router = useRouter();
+  
+  // // if user logged out, redirecting to landing page
+  // if (status === 'unauthenticated') {
+  //   router.push('/');
+  // }
+
+  const sessionCheck = useSession({
+    required: true,
+    onUnauthenticated() {
+      redirect('/signIn');
+    }
+  });
+  
+  // local state variables
+  const [records, setRecords] = useState<Array<HabitRecord>>([]);
+  const [handleFetch, setHandleFetch] = useState<boolean>(false);
 
   
   // function to get the habit data records
   const habitRecords = async () => {
-    const data = await getHabitRecords(email);
+    const data = await getHabitRecords(email ?? "");
     setRecords(data);
   }
 
-  // if user logged out, redirecting to landing page
-  if (status === 'unauthenticated') {
-    router.push('/');
-  }
 
   let recLength = records?.length;
   let pos = recLength < 6 ? "absolute" : "relative";
@@ -73,6 +80,8 @@ const Dashboard = () => {
                   </div>
                 </div>
                 <div>
+                  <p className="text-white mb-2">{session?.user?.name}</p>
+                  <button className="bg-white p-2 rounded-md" onClick={() => signOut()}>Sign out</button>
                   <AddRecords handleFetch={handleFetch} setHandleFetch={setHandleFetch} />
                 </div>
               </div>
@@ -84,9 +93,6 @@ const Dashboard = () => {
                 </div>
               </div>
             </div>
-          </div>
-          <div className={`text-center ${pos} bottom-0 left-1/2 trasnform -translate-x-1/2 -translate-y-1/2`}>
-            <Footer />
           </div>
       </div>
     </div>
