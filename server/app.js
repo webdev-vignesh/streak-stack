@@ -4,6 +4,7 @@ const dotenv = require('dotenv').config();
 
 const connectDb = require('./config/dbConnection');
 const habitRoute = require("./routes/habitRoute");
+const paymentRoute = require("./routes/paymentRoute");
 const errorMiddleware = require("./middleware/errorMiddleware");
 
 const app = express();
@@ -15,6 +16,7 @@ app.use(cors());
 
 // routes
 app.use('/api/habitRecords', habitRoute);
+app.use('/api/payment', paymentRoute);
 
 app.get("/", (req, res) => {
     throw new Error ("Error occured");
@@ -33,4 +35,3 @@ connectDb()
 .catch((error) => {
     console.log(error);
 })
-
