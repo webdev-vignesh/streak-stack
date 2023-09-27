@@ -3,8 +3,6 @@
 # About :scroll:
 Streak Stack is a Full Stack web application created for Habit tracking. It helps you to create and maintain a new habit for the time period of your choice. You can set daily, weekly and monthly goals with our application and track them with ease. 
 
-You can login as a guest and test the application, you can also signup to save a copy of your habit records. Subscribe to pro membership and unlock special features which will be released soon.
-
 ## Technologies used: :hammer_and_wrench:
 ### Frontend :computer:
 - Next Js
@@ -25,9 +23,11 @@ You can login as a guest and test the application, you can also signup to save a
 - [x] ~~Dashboard~~
 - [x] ~~Create, Read habits functionality~~
 - [x] ~~Update, Delete functionlaity~~
+- [x] ~~Login and authentication using Next Auth and Firebase~~
+- [x] ~~Payment and pricing integration~~
 
 ### ToDo's :memo:
-- [ ] Login and authentication - multiuser access (50% loading...)
-- [ ] Payment and pricing integration
+
+- [ ] Dashboard page
 - [ ] Charts for showing records and achievemnts
 - [ ] DB schema modification work
