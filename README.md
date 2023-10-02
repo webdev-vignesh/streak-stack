@@ -28,6 +28,7 @@ Streak Stack is a Full Stack web application created for Habit tracking. It help
 
 ### ToDo's :memo:
 
-- [ ] Dashboard page
+- [ ] Dashboard page - web & mobile
 - [ ] Charts for showing records and achievemnts
 - [ ] DB schema modification work
+- [ ] Integrating Dashboard and backend
