@@ -5,13 +5,12 @@ Streak Stack is a Full Stack web application created for Habit tracking. It help
 
 ## Technologies used: :hammer_and_wrench:
 ### Frontend :computer:
-- Next Js
-- Typescript 
+- Next JS with Typescript 
 - Tailwind CSS
 
 ### Backend :gear:
-- Node Js
-- Express Js
+- Node JS
+- Express JS
 - Mongo DB
 
 ### Deployment :incoming_envelope:
